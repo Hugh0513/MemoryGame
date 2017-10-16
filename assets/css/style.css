@@ -1,0 +1,110 @@
+body {
+	background:#fff;
+	background-size: 100% auto;
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+
+	/*font-family: 'Julius Sans One', sans-serif;*/
+	font-family: 'Assistant', sans-serif;
+	/*font-family: 'Special Elite', cursive;*/
+
+    color: #000;
+
+	text-align: center;
+}
+
+h1 {
+  	display: block;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  	font-size: 50px;
+}
+
+h2 {
+  	display: block;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  	font-size: 25px;
+}
+
+p {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  	font-size: 15px;
+}
+
+img {
+	width: auto;
+	height: 250px;
+	max-width: 90%;
+	margin: 0% 5%;
+}
+
+li {
+	list-style-type: none;
+    cursor:pointer;
+}
+
+div {
+	/*clear: both;*/
+}
+table {
+	border-width: 10px;
+}
+
+tr {
+    margin: 10px 10px 10px 10px;
+}
+
+td {
+	border: 2px #808080 solid;
+    background-color: #eee;
+    width: 160px;
+    height: 120px;
+}
+
+button {
+	border: 2px #808080 solid;
+    background-color: #eee;
+    width: 160px;
+    height: 120px;
+}
+
+#player1 {
+  border: 2px #808080 solid;
+    background-color: #ccc;
+    width: 160px;
+    height: 120px;
+}
+
+
+#player2 {
+  border: 2px #808080 solid;
+    background-color: #ccc;
+    width: 160px;
+    height: 120px;
+}
+
+#message1 {
+  border: 2px #808080 solid;
+    background-color: #ccc;
+    width: 160px;
+    height: 120px;
+}
+
+
+#message2 {
+  border: 2px #808080 solid;
+    background-color: #ccc;
+    width: 160px;
+    height: 120px;
+}
+
+.card {
+  float: left;
+  border: 2px #808080 solid;
+    background-color: #eee;
+    width: 160px;
+    height: 120px;
+}
