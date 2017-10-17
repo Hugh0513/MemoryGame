@@ -9,7 +9,18 @@ var config = {
   messagingSenderId: "465534832195"
 };
 firebase.initializeApp(config);
-
+/*
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyAq5SgRcA0ceoK-AoKZ2UdIY9gVuQa7Fc8",
+  authDomain: "memorygameadvanced-e394c.firebaseapp.com",
+  databaseURL: "https://memorygameadvanced-e394c.firebaseio.com",
+  projectId: "memorygameadvanced-e394c",
+  storageBucket: "memorygameadvanced-e394c.appspot.com",
+  messagingSenderId: "692414453531"
+};
+firebase.initializeApp(config);
+*/
 var dataRef = firebase.database(); 
 
 // Initial Values
@@ -328,6 +339,19 @@ window.onload = function(event) {
       totMatchCount: 0
     });
 
+    dataRef.ref().update({
+      turn: 1
+    });
+
+    dataRef.ref('/players/1').update({
+      matchCount: 0,
+      clickCount: 0
+    });
+
+    dataRef.ref('/players/2').update({
+      matchCount: 0,
+      clickCount: 0
+    });
 
 
 
@@ -508,11 +532,45 @@ window.onload = function(event) {
         isYourTurn = 0;
       }
 
+      // Game End. Display result.
+      if (currentTurn === 3) {
+
+        console.log("Display result");
+
+        // Display result
+        var p1name = snapshot.child('/players/1').val().name;
+        var p1match = parseFloat(snapshot.child('/players/1').val().matchCount);
+        var p2name = snapshot.child('/players/2').val().name;
+        var p2match = parseFloat(snapshot.child('/players/2').val().matchCount);
+        var result = "";
+
+        console.log("p1match");
+        console.log("p2match");
+
+        if (p1match === p2match) {
+          // Tie game
+          result = "Tie game";
+        }
+        else if (p1match > p2match) {
+          // Player 1 wins
+          result = p1name + " Wins!";
+        }
+        else if (p1match < p2match) {
+          // Player 2 wins
+          result = p2name + " Wins!";
+        }
+
+        $("#message1").html(result);
+
+      } // End of Game End
+
     }
 
-    // Check countries
-    console.log(countriesArray);
-    //if (snapshot.child("/countries").exists()) {
+
+    if (snapshot.child("/countries").exists()) {
+      // Check countries
+      console.log(countriesArray);
+      //if (snapshot.child("/countries").exists()) {
       var k = 0
       for (var i = 1; i < 5; i++) {
         for (var j = 1; j < 5; j++) {
@@ -521,6 +579,7 @@ window.onload = function(event) {
           k++;
         }
       }
+    }
     //}
 
   }); // End of dataRef....
@@ -678,19 +737,24 @@ window.onload = function(event) {
 
   // Watching Firebase and Display coutry name if its openFlg = 1.
   dataRef.ref().on("value", function(snapshot) {
-    //  Showing Cards. If flg = 1, display country name.
-    for (var i = 0; i < 16; i++) {
-      //console.log(this);
-      //console.log(i);
-      if (snapshot.child('/countries/' + i).val().openFlg == "1") {
-        //console.log($(this));
-        $("#" + i).html(snapshot.child('/countries/' + i).val().name);
-      }
-      else {
-        $("#" + i).html("");
-      }
 
-    } // End of for loop
+    if (snapshot.child("/countries").exists()) {
+
+      //  Showing Cards. If flg = 1, display country name.
+      for (var i = 0; i < 16; i++) {
+        //console.log(this);
+        //console.log(i);
+        if (snapshot.child('/countries/' + i).val().openFlg == "1") {
+          //console.log($(this));
+          $("#" + i).html(snapshot.child('/countries/' + i).val().name);
+        }
+        else {
+          $("#" + i).html("");
+        }
+
+      } // End of for loop
+
+    }
 
   }); // End of dataRef.ref().......
 
