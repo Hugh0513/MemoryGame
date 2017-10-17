@@ -1,4 +1,4 @@
-
+/*
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyBUaie81HYFUugbl4WT-aSbfnrM_53t8HU",
@@ -9,7 +9,7 @@ var config = {
   messagingSenderId: "465534832195"
 };
 firebase.initializeApp(config);
-/*
+*/
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyAq5SgRcA0ceoK-AoKZ2UdIY9gVuQa7Fc8",
@@ -20,7 +20,7 @@ var config = {
   messagingSenderId: "692414453531"
 };
 firebase.initializeApp(config);
-*/
+
 var dataRef = firebase.database(); 
 
 // Initial Values
@@ -45,7 +45,10 @@ function doubleArray(array) {
 }
 
 function shuffleArray(array) {
-  var n = array.length, t, i;
+  /*
+  var n = array.length;
+  var t;
+  var i;
 
   while (n) {
     i = Math.floor(Math.random() * n--);
@@ -53,10 +56,33 @@ function shuffleArray(array) {
     array[n] = array[i];
     array[i] = t;
   }
+  */
+
+  for(var i = array.length - 1; i > 0; i--){
+      var r = Math.floor(Math.random() * (i + 1));
+      var tmp = array[i];
+      array[i] = array[r];
+      array[r] = tmp;
+  }
 
   console.log(array);
   return array;
 }
+
+/*
+function checkArray(array) {
+  var k;
+  var cnt;
+  var ng;
+  for (var i = 0; i < array.length; i++) {
+    k = array[i];
+    for (var j = 0; j < array.length; j++)
+    if(array[k].name == ){
+
+    }
+  }
+}
+*/
 
 /*
 function alignCards(array) {
@@ -353,8 +379,6 @@ window.onload = function(event) {
       clickCount: 0
     });
 
-
-
         //**** Aligning Cards API *****************************//
         var queryURL = "https://restcountries.eu/rest/v2/all?fields=name;alpha2Code;flag";
 
@@ -377,12 +401,13 @@ window.onload = function(event) {
               if (countriesPicked.includes(tempValue) === false)
                 countriesPicked.push(response[tempValue]);
 
-                console.log(countriesPicked[j]);
-                console.log(countriesPicked);
+                //console.log(countriesPicked[j]);
+                //console.log(countriesPicked);
           }
 
           //Double and Shuffle array
           countriesArray = shuffleArray(doubleArray(countriesPicked)) 
+          console.log(countriesArray.length);
           //alignCards(countriesArray); // Aligning Cards on the table
           addCountries(countriesArray); // Insert countries to Firebase
 
@@ -439,12 +464,13 @@ window.onload = function(event) {
               if (countriesPicked.includes(tempValue) === false)
                 countriesPicked.push(response[tempValue]);
 
-                console.log(countriesPicked[j]);
-                console.log(countriesPicked);
+                //console.log(countriesPicked[j]);
+                //console.log(countriesPicked);
           }
 
           //Double and Shuffle array
           countriesArray = shuffleArray(doubleArray(countriesPicked)) 
+          console.log(countriesArray.length);
           //alignCards(countriesArray); // Aligning Cards on the table
           addCountries(countriesArray); // Insert countries to Firebase
 
