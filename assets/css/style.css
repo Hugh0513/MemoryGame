@@ -1,5 +1,5 @@
 body {
-	background:#fff;
+	background:#000 url("../images/global.jpg");
 	background-size: 100% auto;
 	background-position: center center;
 	background-repeat: no-repeat;
@@ -9,7 +9,7 @@ body {
 	font-family: 'Assistant', sans-serif;
 	/*font-family: 'Special Elite', cursive;*/
 
-    color: #000;
+  color: #000;
 
 	text-align: center;
 }
@@ -38,7 +38,8 @@ img {
 	width: auto;
 	height: 250px;
 	max-width: 90%;
-	margin: 0% 5%;
+	margin: 0% 0%;
+  border: none;
 }
 
 li {
@@ -71,40 +72,68 @@ button {
     height: 120px;
 }
 
-#player1 {
-  border: 2px #808080 solid;
-    background-color: #ccc;
-    width: 160px;
-    height: 120px;
+.flag {
+  margin: 10px 0px 10px 0px;
+
 }
 
+.class {
+  border-style: none;
+}
+
+.title {
+  color: white;
+}
+
+#player1 {
+  border: 2px #808080 solid;
+  background-color: #ccc;
+  margin: 10px 10px 10px 10px;
+}
 
 #player2 {
   border: 2px #808080 solid;
-    background-color: #ccc;
-    width: 160px;
-    height: 120px;
+  background-color: #ccc;
+  margin: 10px 10px 10px 10px;
 }
 
 #message1 {
   border: 2px #808080 solid;
-    background-color: #ccc;
-    width: 160px;
-    height: 120px;
+  background-color: #ccc;
+  margin: 10px 10px 10px 10px;
 }
-
 
 #message2 {
   border: 2px #808080 solid;
-    background-color: #ccc;
-    width: 160px;
-    height: 120px;
+  background-color: #ccc;
+  margin: 10px 10px 10px 10px;
 }
 
 .card {
   float: left;
   border: 2px #808080 solid;
-    background-color: #eee;
-    width: 160px;
-    height: 120px;
+  background-color: #eee;
+  height: 12vh;
+}
+
+/*** footer ***/
+.footer {
+  /*position: fixed;*/
+    width: 100%;
+    height: 60px;
+    padding: 20px;
+  text-align: center;
+  background: #666666;
+  /*bottom: 0;*/
+  left: 0;
+  
+  font-size: 15px;
+  color: #cccccc;
+
+    border-top: 5px solid #cccccc;
+  /*position: absolute;*/
+  bottom: 0;
+
+  /*margin-bottom: 0;*/
+  /*clear: both;*/
 }
