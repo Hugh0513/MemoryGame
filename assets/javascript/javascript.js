@@ -1,4 +1,4 @@
-
+/*
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyBUaie81HYFUugbl4WT-aSbfnrM_53t8HU",
@@ -9,7 +9,7 @@ var config = {
   messagingSenderId: "465534832195"
 };
 firebase.initializeApp(config);
-/*
+*/
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyAq5SgRcA0ceoK-AoKZ2UdIY9gVuQa7Fc8",
@@ -20,7 +20,7 @@ var config = {
   messagingSenderId: "692414453531"
 };
 firebase.initializeApp(config);
-*/
+
 var dataRef = firebase.database(); 
 
 // Initial Values
@@ -58,44 +58,6 @@ function shuffleArray(array) {
   return array;
 }
 
-/*
-function alignCards(array) {
-
-    $("#panel").html("<table>")
-    var k = 0
-    for (var i = 0; i < 4; i++) {
-      $("#panel").append("<tr>")
-      for (var j = 0; j < 4; j++) {
-      $("#panel").append("<td class='card' id='" + k 
-       + "' data-name='" + array[k].name 
-       + "' flag-img='" + array[k].flag 
-       + "' flg='0'></td>");
-      $("#panel").append("</target>")
-      k++;
-      }
-    }
-    $("#panel").append("</table>")
-}
-*/
-
-
-// Align Cards in prepared divs
-/*
-function alignCards(array) {
-  console.log(array);
-    var k = 0
-    for (var i = 0; i < 4; i++) {
-      for (var j = 0; j < 4; j++) {
-        $("#" + i + "_" + j).append("<div class='card' id='" + k 
-         + "' data-name='" + array[k].name 
-         + "' flag-img='" + array[k].flag 
-         + "' flg='0'></div>");
-        k++;
-      }
-    }
-    return array;
-}
-*/
 
 // Clear all data in firebase
 var firebaseReset = function () {
@@ -104,10 +66,11 @@ var firebaseReset = function () {
 
 }
 
+/*
 // Add player into firebase
 var addPlayer = function() {
-  //*** Set players into firebase ***//
-  //*** and Display message("You are player 1/2") and div(name, wins and loses) ***//
+  // Set players into firebase //
+  // and Display message("You are player 1/2") and div(name, wins and loses) //
 
   var wins = 0;
   var loses = 0;
@@ -130,8 +93,6 @@ var addPlayer = function() {
       player1 = name;
       yourPlayerId = 1;
 
-      return true;
-
     }
     else if (!snapshot.child("/players/2").exists()) {
       console.log("player2 doesnt exist");
@@ -146,16 +107,7 @@ var addPlayer = function() {
       player2 = name;
       yourPlayerId = 2;
 
-      // Update "turn"
-      //dataRef.ref().update({
-      //  turn: 1
-      //});
 
-      return true;
-    }
-    else {
-
-      return false;
     }
 
     console.log(yourPlayerId);
@@ -165,7 +117,7 @@ var addPlayer = function() {
   });
   
 }
-
+*/
 
 // Add countires into firebase
 var addCountries = function(array) {
@@ -207,12 +159,6 @@ var resetMessages = function() {
   $("#message2").empty();
 }
 
-/*
-var waitAndFlip = function(i,j) {
-  setTimeout("flip(" + i + "," + j + ")", 1000 * 3);
-  //alert("hello")
-}
-*/
 
 var flip = function(i, j) {
 
@@ -229,19 +175,8 @@ var flip = function(i, j) {
   });
 }
 
-//**************************************************************//
-
-/*
-window.onbeforeunload = function(event) {
-
-  event.returnValue = 'Do you want to leave this page?';
- 
-}
-
 
 window.onclose = function(event){
-
-  event.returnValue = 'Do you want to leave this page?';
 
   if (yourPlayerId !== 0){
     // Update "turn"
@@ -253,7 +188,7 @@ window.onclose = function(event){
   }
 
 }
-*/
+
 
 window.onload = function(event) {
 
@@ -275,6 +210,9 @@ window.onload = function(event) {
   //**** Start Button Click ***//
   $("#add-user").on("click", function(event) {
     event.preventDefault();
+    console.log("add-user");
+
+    $("#loginMessage").empty();
 
     name = $("#name-input").val().trim();
     var wins = 0;
@@ -319,7 +257,7 @@ window.onload = function(event) {
           sessionStorage.setItem("id", yourPlayerId);
 
 
-          window.open('./index.html', '_self'); 
+          window.open('./main.html', '_self'); 
 
         }
         else if (!snapshot.child("/players/2").exists()) {
@@ -342,11 +280,10 @@ window.onload = function(event) {
           sessionStorage.setItem("name", name);
           sessionStorage.setItem("id", yourPlayerId);
 
-          window.open('./index.html', '_self'); 
+          window.open('./main.html', '_self'); 
         }
         else {
-          $("#loginMessage").html("Someoen is already gamiong...");
-
+          $("#loginMessage").html("Someoen is already gaming...");
         }
         console.log(yourPlayerId);
 
@@ -450,7 +387,7 @@ window.onload = function(event) {
 
     });
     
-    window.open('./menu.html', '_self'); 
+    window.open('./index.html', '_self'); 
 
   }); // End of Logout cliked
 
@@ -543,7 +480,7 @@ window.onload = function(event) {
     // Display Player2 information
     if (snapshot.child("/players/1").exists()) {
 
-      $("#player1").html(snapshot.child("/players/1").val().name);
+      $("#player1").html("<h2>" + snapshot.child("/players/1").val().name + "</h2>");
       $("#player1").append("<br>");
       $("#player1").append("wins:" + snapshot.child("/players/1").val().wins);
       $("#player1").append("<br>");
@@ -561,7 +498,7 @@ window.onload = function(event) {
     // Display Player2 information
     if (snapshot.child("/players/2").exists()) {
 
-      $("#player2").html(snapshot.child("/players/2").val().name);
+      $("#player2").html("<h2>" + snapshot.child("/players/2").val().name + "</h2>");
       $("#player2").append("<br>");
       $("#player2").append("wins:" + snapshot.child("/players/2").val().wins);
       $("#player2").append("<br>");
@@ -626,6 +563,10 @@ window.onload = function(event) {
       if (currentTurn === 3) {
 
         console.log("Display result");
+
+        // Call modal
+        //$('#gameEnd').modal();
+
 
         // Display result
         var p1name = snapshot.child('/players/1').val().name;
@@ -809,7 +750,7 @@ window.onload = function(event) {
 
         console.log(totMatchCount);
 
-        if (totMatchCount === 8){
+        if (totMatchCount === 1){
           console.log("Game over");
 
           dataRef.ref().update({
