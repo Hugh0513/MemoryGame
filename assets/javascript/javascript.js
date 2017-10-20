@@ -1,4 +1,4 @@
-
+/*
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyBUaie81HYFUugbl4WT-aSbfnrM_53t8HU",
@@ -7,6 +7,17 @@ var config = {
   projectId: "memorygame-64d52",
   storageBucket: "memorygame-64d52.appspot.com",
   messagingSenderId: "465534832195"
+};
+firebase.initializeApp(config);
+*/
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyAq5SgRcA0ceoK-AoKZ2UdIY9gVuQa7Fc8",
+  authDomain: "memorygameadvanced-e394c.firebaseapp.com",
+  databaseURL: "https://memorygameadvanced-e394c.firebaseio.com",
+  projectId: "memorygameadvanced-e394c",
+  storageBucket: "memorygameadvanced-e394c.appspot.com",
+  messagingSenderId: "692414453531"
 };
 firebase.initializeApp(config);
 
@@ -119,6 +130,8 @@ var addPlayer = function() {
       player1 = name;
       yourPlayerId = 1;
 
+      return true;
+
     }
     else if (!snapshot.child("/players/2").exists()) {
       console.log("player2 doesnt exist");
@@ -138,9 +151,11 @@ var addPlayer = function() {
       //  turn: 1
       //});
 
+      return true;
     }
     else {
-      alert("Someone is gaming...");
+
+      return false;
     }
 
     console.log(yourPlayerId);
@@ -214,7 +229,6 @@ var flip = function(i, j) {
   });
 }
 
-
 //**************************************************************//
 
 /*
@@ -269,17 +283,77 @@ window.onload = function(event) {
     var matchCount = 0;
 
     if (name === "" || name.match( /[^a-zA-Z0-9\s]/ )){
-      alert("Input name(number or alphabet)");
+      $("#loginMessage").html("Input name(number or alphabet)");
     }
     else {
-      addPlayer();// Add Player into Firebase and Display user name
-      yourPlayerName = name;//displayYourId(); // You are Player ....
-    }
+      // Add Player into Firebase and Display user name
 
-    // Store all content into sessionStorage
-    sessionStorage.clear();
-    sessionStorage.setItem("name", name);
-    sessionStorage.setItem("id", yourPlayerId);
+      //addPlayer();
+
+      var wins = 0;
+      var loses = 0;
+      var clickCount = 0;
+      var matchCount = 0;
+
+      // Read firebase only once to set Players
+      dataRef.ref().once("value", function(snapshot) {
+
+        if (!snapshot.child("/players/1").exists()) {
+          console.log("player1 doesnt  exists");
+          dataRef.ref('/players/1').set({
+            name: name,
+            wins: wins,
+            loses: loses,
+            matchCount: matchCount,
+            clickCount: clickCount
+          });
+
+          player1 = name;
+          yourPlayerId = 1;
+
+          yourPlayerName = name;
+        
+          // Store all content into sessionStorage
+          sessionStorage.clear();
+          sessionStorage.setItem("name", name);
+          sessionStorage.setItem("id", yourPlayerId);
+
+
+          window.open('./index.html', '_self'); 
+
+        }
+        else if (!snapshot.child("/players/2").exists()) {
+          console.log("player2 doesnt exist");
+          dataRef.ref('/players/2').set({
+            name: name,
+            wins: wins,
+            loses: loses,
+            matchCount: matchCount,
+            clickCount: clickCount
+          });
+
+          player2 = name;
+          yourPlayerId = 2;
+
+          yourPlayerName = name;
+        
+          // Store all content into sessionStorage
+          sessionStorage.clear();
+          sessionStorage.setItem("name", name);
+          sessionStorage.setItem("id", yourPlayerId);
+
+          window.open('./index.html', '_self'); 
+        }
+        else {
+          $("#loginMessage").html("Someoen is already gamiong...");
+
+        }
+        console.log(yourPlayerId);
+
+      }, function(errorObject) {
+        console.log("The read failed: " + errorObject.code);
+      });
+    }
 
   }); // End of Start button cliked
 
@@ -328,9 +402,6 @@ window.onload = function(event) {
       totMatchCount: 0
     });
 
-
-
-
         //**** Aligning Cards API *****************************//
         var queryURL = "https://restcountries.eu/rest/v2/all?fields=name;alpha2Code;flag";
 
@@ -366,10 +437,22 @@ window.onload = function(event) {
 
         //**** End of Aligning Cards ******************************//
 
-
   }); // End of Restart button cliked
 
+  //**** Logtout Click ***//
+  $("#logout").on("click", function(event) {
+    event.preventDefault();
+    console.log("logout");
 
+    dataRef.ref().once("value", function(snapshot) {
+
+        dataRef.ref('/players/' + yourPlayerId).set({});
+
+    });
+    
+    window.open('./menu.html', '_self'); 
+
+  }); // End of Logout cliked
 
   // Watching Firebase. This only takes added child...
   dataRef.ref("/players").on("child_added", function(snapshot) {
@@ -466,9 +549,9 @@ window.onload = function(event) {
       $("#player1").append("<br>");
       $("#player1").append("loses:" + snapshot.child("/players/1").val().loses);
       $("#player1").append("<br>");
-      $("#player1").append("click count:" + snapshot.child("/players/1").val().clickCount);
+      $("#player1").append("click:" + snapshot.child("/players/1").val().clickCount);
       $("#player1").append("<br>");
-      $("#player1").append("match count:" + snapshot.child("/players/1").val().matchCount);
+      $("#player1").append("match:" + snapshot.child("/players/1").val().matchCount);
 
     }
     else {
@@ -484,9 +567,9 @@ window.onload = function(event) {
       $("#player2").append("<br>");
       $("#player2").append("loses:" + snapshot.child("/players/2").val().loses);
       $("#player2").append("<br>");
-      $("#player2").append("click count:" + snapshot.child("/players/2").val().clickCount);
+      $("#player2").append("click:" + snapshot.child("/players/2").val().clickCount);
       $("#player2").append("<br>");
-      $("#player2").append("match count:" + snapshot.child("/players/2").val().matchCount);
+      $("#player2").append("match:" + snapshot.child("/players/2").val().matchCount);
 
     }
     else {
@@ -536,7 +619,7 @@ window.onload = function(event) {
         $("#player2").css({
           'border': 'none'
         });
-        
+
       }
 
     }

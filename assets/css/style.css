@@ -132,9 +132,9 @@ button {
 /*** footer ***/
 .footer {
   /*position: fixed;*/
-    width: 100%;
-    height: 60px;
-    padding: 20px;
+  width: 100%;
+  height: 60px;
+  padding: 20px;
   text-align: center;
   background: #666666;
   /*bottom: 0;*/
@@ -143,10 +143,21 @@ button {
   font-size: 15px;
   color: #cccccc;
 
-    border-top: 5px solid #cccccc;
+  border-top: 5px solid #cccccc;
   /*position: absolute;*/
   bottom: 0;
 
   /*margin-bottom: 0;*/
   /*clear: both;*/
+}
+
+
+
+h4 {
+    display: block;
+  text-align: center;
+}
+
+#loginMessage {
+  color: red;
 }

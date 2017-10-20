@@ -38,18 +38,21 @@
 
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item active">
+      <li class="nav-item">
         <a class="nav-link" href="#howToUse" data-toggle="modal">HOW TO PLAY</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#contact" data-toggle="modal">Contact</a>
+        <a class="nav-link" href="#contact" data-toggle="modal">CONTACT</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#logout" data-toggle="modal">Log out</a>
       </li>
     </ul>
   </div>
 
 </nav>
 
-<!-- Modal HTML -->
+<!-- Modal HTML   How to Use-->
 <div id="howToUse" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -65,22 +68,39 @@
     </div>
 </div>
 
-<!-- Modal HTML -->
+<!-- Modal HTML   Contact -->
 <div id="contact" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">How to Play :</h4>
+                <h4 class="modal-title">Contact :</h4>
             </div>
             <div class="modal-body">
-                <p>Steps ....</p>
                 
             </div>
         </div>
     </div>
 </div>
 
+<!-- Modal HTML   Logout -->
+<div id="logout" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <p>You want to log out?</p>
+                <input id="logout" type="submit" value="Log out">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--
 <div id="start">
 	<form name="input-form">
 		<input id="name-input" type="text" placeholder="Name">
@@ -91,6 +111,7 @@
     <input id="restart" type="submit" value="Restart">
 	</form>
 </div>
+-->
 
 <div id="message-area">
   <div class="row">
@@ -121,7 +142,6 @@
     <div id="4_4" class="col-xs-6 col-sm-3 col-md-3 col-lg-3 flag">BLAH</div>
   </div>
 </div>
-
 
 <div class="footer bg-dark">
     <p class="copy">&copy;Copyrihgt 2017 Shubha, Alam, Hugh</p>
