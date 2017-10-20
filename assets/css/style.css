@@ -72,6 +72,10 @@ button {
     height: 120px;
 }
 
+.picked, .matched {
+  transform: rotateY(180deg);
+}
+
 .flag {
   margin: 10px 0px 10px 0px;
 
@@ -87,26 +91,34 @@ button {
 
 #player1 {
   border: 2px #808080 solid;
-  background-color: #ccc;
+  background-color: #000;
+  color: #fff;
   margin: 10px 10px 10px 10px;
+  border-style: none;
 }
 
 #player2 {
   border: 2px #808080 solid;
-  background-color: #ccc;
+  background-color: #000;
+  color: #fff;
   margin: 10px 10px 10px 10px;
+  border-style: none;
 }
 
 #message1 {
   border: 2px #808080 solid;
-  background-color: #ccc;
+  background-color: #000;
+  color: #fff;
   margin: 10px 10px 10px 10px;
+  border-style: none;
 }
 
 #message2 {
   border: 2px #808080 solid;
-  background-color: #ccc;
+  background-color: #000;
+  color: #fff;
   margin: 10px 10px 10px 10px;
+  border-style: none;
 }
 
 .card {
@@ -114,6 +126,7 @@ button {
   border: 2px #808080 solid;
   background-color: #eee;
   height: 12vh;
+  border-style: none;
 }
 
 /*** footer ***/

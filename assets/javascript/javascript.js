@@ -508,6 +508,37 @@ window.onload = function(event) {
         isYourTurn = 0;
       }
 
+      if (snapshot.val().turn == 1) {
+
+        $("#player1").css({
+          'border-style': 'solid',
+          'border-color': 'orange',
+          'border-width': 'thick'
+        });
+        $("#player2").css({
+          'border': 'none'
+        });
+      } 
+      else if (snapshot.val().turn == 2) {
+        $("#player1").css({
+          'border': 'none'
+        });
+        $("#player2").css({
+          'border-style': 'solid',
+          'border-color': 'orange',
+          'border-width': 'thick'
+        });
+      }
+      else {
+        $("#player1").css({
+          'border': 'none'
+        });
+        $("#player2").css({
+          'border': 'none'
+        });
+        
+      }
+
     }
 
     // Check countries
@@ -581,9 +612,12 @@ window.onload = function(event) {
 
         console.log("yourClickCount:" + yourClickCount);
 
+        console.log(this);
+
         // Show country name
         $(this).html($(this).attr("data-name"));
-        $(this).attr("flg","1") // needed?
+        $(this).attr("flg","1"); // needed?
+        $(this).addClass("picked");
         //$(this).html("<img src='" + $(this).attr("flag-img") + "'>");
 
         if (clickCount === 1) {
@@ -610,6 +644,7 @@ window.onload = function(event) {
 
           $(prevObj).attr("flg","1");
           $(this).attr("flg","1");
+          $(this).addClass("matched");
 
           //isMatch = 1; // Keep playing
           yourMatchCount++;
@@ -636,6 +671,10 @@ window.onload = function(event) {
           console.log("Mismatch");
           //setTimeout(flip($(prevObj).attr("id"),$(this).attr("id")), 1000 * 3);
           setTimeout("flip(" + thisId + "," + prevId +")", 1000 * 2);
+
+
+          $(this).removeClass("picked");
+          $(prevObj).removeClass("picked");
 
           // Move operaiton to another player 
           console.log(yourPlayerId);
