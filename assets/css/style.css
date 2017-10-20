@@ -111,6 +111,7 @@ button {
   color: #fff;
   margin: 10px 10px 10px 10px;
   border-style: none;
+  font-size: 20px;
 }
 
 #message2 {
@@ -151,8 +152,6 @@ button {
   /*clear: both;*/
 }
 
-
-
 h4 {
     display: block;
   text-align: center;
@@ -162,7 +161,6 @@ h4 {
   display: inline;
   color: red;
 }
-
 
 .modal-title {
   margin: 0 auto;

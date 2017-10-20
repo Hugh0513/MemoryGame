@@ -1,4 +1,4 @@
-
+/*
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyBUaie81HYFUugbl4WT-aSbfnrM_53t8HU",
@@ -9,7 +9,7 @@ var config = {
   messagingSenderId: "465534832195"
 };
 firebase.initializeApp(config);
-/*
+*/
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyAq5SgRcA0ceoK-AoKZ2UdIY9gVuQa7Fc8",
@@ -20,7 +20,7 @@ var config = {
   messagingSenderId: "692414453531"
 };
 firebase.initializeApp(config);
-*/
+
 var dataRef = firebase.database(); 
 
 // Initial Values
@@ -204,6 +204,11 @@ window.onload = function(event) {
   var isYourTurn = 0;
   var countriesArray;
 
+  dataRef.ref().update({
+    totMatchCount: 0
+  });
+
+
   yourPlayerName = sessionStorage.getItem("name")
   yourPlayerId = sessionStorage.getItem("id")
 
@@ -330,10 +335,12 @@ window.onload = function(event) {
 
   }); // End of Delete button cliked
 
+
   //**** Restart Button Click ***//
   $("#restart").on("click", function(event) {
     event.preventDefault();
 
+    $("#message1").empty();
 
     dataRef.ref().update({
       totMatchCount: 0
@@ -567,12 +574,19 @@ window.onload = function(event) {
         // Call modal
         //$('#gameEnd').modal();
 
+        console.log(totMatchCount);
 
         // Display result
         var p1name = snapshot.child('/players/1').val().name;
         var p1match = parseFloat(snapshot.child('/players/1').val().matchCount);
         var p2name = snapshot.child('/players/2').val().name;
         var p2match = parseFloat(snapshot.child('/players/2').val().matchCount);
+
+        var p1wins = parseFloat(snapshot.child('/players/1').val().wins);
+        var p1loses = parseFloat(snapshot.child('/players/1').val().loses);
+        var p2wins = parseFloat(snapshot.child('/players/2').val().wins);
+        var p2loses = parseFloat(snapshot.child('/players/2').val().loses);
+
         var result = "";
 
         console.log("p1match");
@@ -592,6 +606,31 @@ window.onload = function(event) {
         }
 
         $("#message1").html(result);
+        if (totMatchCount === 8) {
+          if (p1match > p2match) {
+            // Player 1 wins
+            wins = p1wins + 1;
+            loses = p2loses + 1;
+            dataRef.ref('/players/1').update({
+              wins: wins
+            });
+            dataRef.ref('/players/2').update({
+              loses: loses
+            });
+          }
+          else if (p1match < p2match) {
+            // Player 2 wins
+            wins = p2wins + 1;
+            loses = p1loses + 1;
+            dataRef.ref('/players/1').update({
+              loses: loses
+            });
+            dataRef.ref('/players/2').update({
+              wins: wins
+            });
+          }
+        } 
+
 
       } // End of Game End
 
@@ -728,7 +767,6 @@ window.onload = function(event) {
           //setTimeout(flip($(prevObj).attr("id"),$(this).attr("id")), 1000 * 3);
           setTimeout("flip(" + thisId + "," + prevId +")", 1000 * 2);
 
-
           $(this).removeClass("picked");
           $(prevObj).removeClass("picked");
 
@@ -750,7 +788,7 @@ window.onload = function(event) {
 
         console.log(totMatchCount);
 
-        if (totMatchCount === 1){
+        if (totMatchCount === 8){
           console.log("Game over");
 
           dataRef.ref().update({
@@ -760,6 +798,38 @@ window.onload = function(event) {
           dataRef.ref().update({
             totMatchCount: 0
           });
+
+          var p1name = snapshot.child('/players/1').val().name;
+          var p1match = parseFloat(snapshot.child('/players/1').val().matchCount);
+          var p1wins = parseFloat(snapshot.child('/players/1').val().wins);
+          var p1loses = parseFloat(snapshot.child('/players/1').val().loses);
+          var p2name = snapshot.child('/players/2').val().name;
+          var p2match = parseFloat(snapshot.child('/players/2').val().matchCount);
+          var p2wins = parseFloat(snapshot.child('/players/2').val().wins);
+          var p2loses = parseFloat(snapshot.child('/players/2').val().loses);
+
+          if (p1match > p2match) {
+            // Player 1 wins
+            loses = p2loses + 1;
+            dataRef.ref('/players/1').update({
+              wins: wins
+            });
+            dataRef.ref('/players/2').update({
+              loses: loses
+            });
+          }
+          else if (p1match < p2match) {
+            // Player 2 wins
+            wins = p2wins + 1;
+            loses = p1loses + 1;
+            dataRef.ref('/players/1').update({
+              loses: loses
+            });
+            dataRef.ref('/players/2').update({
+              wins: wins
+            });
+          }
+
         }
 
         prevId = -1; // Initialize
@@ -769,7 +839,6 @@ window.onload = function(event) {
     }// End of (isYourTurn === 1)
 
   }); // End of Main logic (click cards)
-
 
   // Watching Firebase and Display coutry name if its openFlg = 1.
   dataRef.ref().on("value", function(snapshot) {
