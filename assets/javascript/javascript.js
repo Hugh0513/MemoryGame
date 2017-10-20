@@ -1,4 +1,4 @@
-/*
+
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyBUaie81HYFUugbl4WT-aSbfnrM_53t8HU",
@@ -9,7 +9,7 @@ var config = {
   messagingSenderId: "465534832195"
 };
 firebase.initializeApp(config);
-*/
+/*
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyAq5SgRcA0ceoK-AoKZ2UdIY9gVuQa7Fc8",
@@ -20,7 +20,7 @@ var config = {
   messagingSenderId: "692414453531"
 };
 firebase.initializeApp(config);
-
+*/
 var dataRef = firebase.database(); 
 
 // Initial Values
@@ -621,6 +621,38 @@ window.onload = function(event) {
         });
 
       }
+
+      // Game End. Display result.
+      if (currentTurn === 3) {
+
+        console.log("Display result");
+
+        // Display result
+        var p1name = snapshot.child('/players/1').val().name;
+        var p1match = parseFloat(snapshot.child('/players/1').val().matchCount);
+        var p2name = snapshot.child('/players/2').val().name;
+        var p2match = parseFloat(snapshot.child('/players/2').val().matchCount);
+        var result = "";
+
+        console.log("p1match");
+        console.log("p2match");
+
+        if (p1match === p2match) {
+          // Tie game
+          result = "Tie game";
+        }
+        else if (p1match > p2match) {
+          // Player 1 wins
+          result = p1name + " Wins!";
+        }
+        else if (p1match < p2match) {
+          // Player 2 wins
+          result = p2name + " Wins!";
+        }
+
+        $("#message1").html(result);
+
+      } // End of Game End
 
     }
 
