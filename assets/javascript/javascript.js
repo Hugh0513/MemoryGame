@@ -189,6 +189,66 @@ window.onclose = function(event){
 
 }
 
+var nextGame = function() {
+
+    $("#message1").empty();
+
+    dataRef.ref().update({
+      totMatchCount: 0
+    });
+
+    dataRef.ref().update({
+      turn: 1
+    });
+
+    dataRef.ref('/players/1').update({
+      matchCount: 0,
+      clickCount: 0
+    });
+
+    dataRef.ref('/players/2').update({
+      matchCount: 0,
+      clickCount: 0
+    });
+
+
+    //**** Aligning Cards API *****************************//
+    var queryURL = "https://restcountries.eu/rest/v2/all?fields=name;alpha2Code;flag";
+
+    //total number of random picks
+    var totPick = 8;
+    //Contains fields flag, name, alpha2Code
+    var countriesPicked = [];
+
+    // Gathering data from API
+    $.ajax({
+      url:queryURL,
+      method: "GET"
+      }).done(function(response) {
+      console.log(response.length)
+
+      for (var j=0;countriesPicked.length<totPick;j++) {
+          //pick random no. b/w 1 and 250
+          var tempValue = Math.floor(Math.random() * response.length);
+          //make sure they are not already picked
+          if (countriesPicked.includes(tempValue) === false)
+            countriesPicked.push(response[tempValue]);
+
+            console.log(countriesPicked[j]);
+            console.log(countriesPicked);
+      }
+
+      //Double and Shuffle array
+      countriesArray = shuffleArray(doubleArray(countriesPicked)) 
+      //alignCards(countriesArray); // Aligning Cards on the table
+      addCountries(countriesArray); // Insert countries to Firebase
+
+    });// End of ajax
+
+    //**** End of Aligning Cards ******************************//
+
+}
+
 
 window.onload = function(event) {
 
@@ -346,40 +406,40 @@ window.onload = function(event) {
       totMatchCount: 0
     });
 
-        //**** Aligning Cards API *****************************//
-        var queryURL = "https://restcountries.eu/rest/v2/all?fields=name;alpha2Code;flag";
+    //**** Aligning Cards API *****************************//
+    var queryURL = "https://restcountries.eu/rest/v2/all?fields=name;alpha2Code;flag";
 
-        //total number of random picks
-        var totPick = 8;
-        //Contains fields flag, name, alpha2Code
-        var countriesPicked = [];
+    //total number of random picks
+    var totPick = 8;
+    //Contains fields flag, name, alpha2Code
+    var countriesPicked = [];
 
-        // Gathering data from API
-        $.ajax({
-          url:queryURL,
-          method: "GET"
-          }).done(function(response) {
-          console.log(response.length)
+    // Gathering data from API
+    $.ajax({
+      url:queryURL,
+      method: "GET"
+      }).done(function(response) {
+      console.log(response.length)
 
-          for (var j=0;countriesPicked.length<totPick;j++) {
-              //pick random no. b/w 1 and 250
-              var tempValue = Math.floor(Math.random() * response.length);
-              //make sure they are not already picked
-              if (countriesPicked.includes(tempValue) === false)
-                countriesPicked.push(response[tempValue]);
+      for (var j=0;countriesPicked.length<totPick;j++) {
+          //pick random no. b/w 1 and 250
+          var tempValue = Math.floor(Math.random() * response.length);
+          //make sure they are not already picked
+          if (countriesPicked.includes(tempValue) === false)
+            countriesPicked.push(response[tempValue]);
 
-                console.log(countriesPicked[j]);
-                console.log(countriesPicked);
-          }
+            console.log(countriesPicked[j]);
+            console.log(countriesPicked);
+      }
 
-          //Double and Shuffle array
-          countriesArray = shuffleArray(doubleArray(countriesPicked)) 
-          //alignCards(countriesArray); // Aligning Cards on the table
-          addCountries(countriesArray); // Insert countries to Firebase
+      //Double and Shuffle array
+      countriesArray = shuffleArray(doubleArray(countriesPicked)) 
+      //alignCards(countriesArray); // Aligning Cards on the table
+      addCountries(countriesArray); // Insert countries to Firebase
 
-        });// End of ajax
+    });// End of ajax
 
-        //**** End of Aligning Cards ******************************//
+    //**** End of Aligning Cards ******************************//
 
   }); // End of Restart button cliked
 
@@ -631,6 +691,13 @@ window.onload = function(event) {
           }
         } 
 
+        //$("#message1").html('<br><button id="restart" type="submit" value="Restart">Restart</button>'); 
+        //var newDiv = $("<button>")
+        //$("#message1").append(newDiv);
+        //newDiv.addClass("restart");
+        //newDiv.html("restart");
+
+        setTimeout(nextGame, 1000 * 3);
 
       } // End of Game End
 
